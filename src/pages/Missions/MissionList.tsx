@@ -1,22 +1,29 @@
+import { useEffect, useState } from "react";
 import { Grid, Typography } from "@mui/material";
+import { MissionModel } from "../../data-models/Missions/MissionModel";
+import { getMissions } from "../../api/missionsApi";
 import MissionItem from "../../components/Missions/MissionItem";
 
 
 const MissionList = () => {
+  const [missions, setMissions] = useState<MissionModel[]>([]);
+
+  useEffect(() => {
+    getMissions().then((data) => setMissions(data));
+  }, []);
+
   return (
     <Grid container gap={3} justifyContent={"center"} margin='0 auto'>
       <Grid item xs={12} md={8}>
-        <Typography component='h1' variant="h3">Robots missions</Typography>
+        <Typography variant="h3">Robots missions</Typography>
       </Grid>
-      <Grid item xs={12} md={8}>
-        <MissionItem title={"Mission 1"} />
-      </Grid>
-      <Grid item xs={12} md={8}>
-        <MissionItem title={"Mission 2"} />
-      </Grid>
-      <Grid item xs={12} md={8}>
-        <MissionItem title={"Mission 3"} />
-      </Grid>
+      {
+        missions.map((mission) =>
+          <Grid item xs={12} md={8}>
+            <MissionItem mission={mission} />
+          </Grid>
+        )
+      }
     </Grid>
   );
 }

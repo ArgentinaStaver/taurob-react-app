@@ -1,6 +1,6 @@
 import { RobotModel } from "../Robots/RobotModel";
 
-export interface Mission {
+export interface MissionModel {
   id: number;
   name: string;
   description: string;

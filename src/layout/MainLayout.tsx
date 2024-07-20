@@ -13,7 +13,7 @@ const MainLayout = () => {
   return (
     <Box sx={sx}>
       <Header />
-      <Grid container component='main' margin='0 auto' >
+      <Grid container component='main' margin='0 auto' maxWidth={"lg"}>
         <Grid item xs={12}>
           <Outlet />
         </Grid>

@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import MainLayout from '../layout/MainLayout';
 import MissionList from '../pages/Missions/MissionList';
 import RobotList from '../pages/Robots/RobotList';
+import MissionDetails from '../pages/Missions/MissionDetails';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: '/missions',
         element: <MissionList />,
+      },
+      {
+        path: '/mission-details/:id',
+        element: <MissionDetails />,
       },
       {
         path: '/robots',
