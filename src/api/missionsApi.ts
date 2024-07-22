@@ -1,23 +1,32 @@
 import axios from "axios";
+import mapMissionResponseToModel from "../data-models/Missions/mapMissionResponseToModel";
+import {
+  MissionResponse,
+  MissionsResponse,
+} from "../data-models/Missions/MissionResponseModel";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
-export const getMissions = async () => {
+export const getMissions = async (): Promise<MissionsResponse> => {
   try {
-    const response = await axios.get(`${baseURL}/missions`);
+    const { data, status } = await axios.get(`${baseURL}/missions`);
 
-    return response.data;
+    return { data: data.map(mapMissionResponseToModel), status };
   } catch (error) {
-    console.log(error);
+    return { data: [], status: (error as any).response.status };
   }
 };
 
-export const getMissionById = async (missionId: number) => {
+export const getMissionById = async (
+  missionId: number
+): Promise<MissionResponse> => {
   try {
-    const response = await axios.get(`${baseURL}/missions/${missionId}`);
+    const { data, status } = await axios.get(
+      `${baseURL}/missions/${missionId}`
+    );
 
-    return response.data;
+    return { data: mapMissionResponseToModel(data), status };
   } catch (error) {
-    console.log(error);
+    return { status: (error as any).response.status };
   }
 };

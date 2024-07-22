@@ -9,7 +9,7 @@ const MissionList = () => {
   const [missions, setMissions] = useState<MissionModel[]>([]);
 
   useEffect(() => {
-    getMissions().then((data) => setMissions(data));
+    getMissions().then((response) => setMissions(response.data)).catch(() => alert('Error fetching missions'));
   }, []);
 
   return (
@@ -19,7 +19,7 @@ const MissionList = () => {
       </Grid>
       {
         missions.map((mission) =>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={8} key={mission.id}>
             <MissionItem mission={mission} />
           </Grid>
         )

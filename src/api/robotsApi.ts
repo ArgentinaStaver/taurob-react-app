@@ -1,23 +1,28 @@
 import axios from "axios";
+import {
+  RobotResponse,
+  RobotsResponse,
+} from "../data-models/Robots/RobotResponseModel";
+import mapRobotResponseToModel from "../data-models/Robots/mapRobotResponseToModel";
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
-export const getRobots = async () => {
+export const getRobots = async (): Promise<RobotsResponse> => {
   try {
-    const response = await axios.get(`${baseURL}/robots`);
+    const { data, status } = await axios.get(`${baseURL}/robots`);
 
-    return response.data;
+    return { data: data.map(mapRobotResponseToModel), status };
   } catch (error) {
-    console.log(error);
+    return { data: [], status: (error as any).response.status };
   }
 };
 
-export const getRobotById = async (robotId: number) => {
+export const getRobotById = async (robotId: number): Promise<RobotResponse> => {
   try {
-    const response = await axios.get(`${baseURL}/robots/${robotId}`);
+    const { data, status } = await axios.get(`${baseURL}/robots/${robotId}`);
 
-    return response.data;
+    return { data: mapRobotResponseToModel(data), status };
   } catch (error) {
-    console.log(error);
+    return { status: (error as any).response.status };
   }
 };

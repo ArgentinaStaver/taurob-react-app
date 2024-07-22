@@ -9,7 +9,7 @@ const RobotList = () => {
   const [robots, setRobots] = useState<RobotModel[]>([]);
 
   useEffect(() => {
-    getRobots().then((data) => setRobots(data));
+    getRobots().then((response) => setRobots(response.data)).catch(() => alert("Error fetching robots"));
   }, []);
 
   return (
@@ -26,7 +26,7 @@ const RobotList = () => {
         <Grid container spacing={3}>
           {robots.map(robot => {
             return (
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={4} key={robot.id}>
                 <RobotItem robot={robot} />
               </Grid>
             )

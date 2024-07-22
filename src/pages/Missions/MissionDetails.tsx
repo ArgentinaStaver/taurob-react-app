@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Typography, Button, Grid } from "@mui/material";
 import { ArrowBackIosNewRounded } from "@mui/icons-material";
+import { format } from "date-fns";
 import { getMissionById } from "../../api/missionsApi";
 import { getRobotById } from "../../api/robotsApi";
 import { MissionModel } from "../../data-models/Missions/MissionModel";
@@ -14,13 +15,13 @@ const MissionDetails = () => {
   let { id } = useParams(); //missionId
 
   const fetchMissionById = async (missionId: number) => {
-    const missionData = await getMissionById(missionId);
-    setMission(missionData);
+    const { data } = await getMissionById(missionId);
+    setMission(data);
   }
 
   const fetchRobotById = async (robotId: number) => {
-    const robotData = await getRobotById(robotId);
-    setRobot(robotData);
+    const { data } = await getRobotById(robotId);
+    setRobot(data);
   }
 
   useEffect(() => {
@@ -35,6 +36,10 @@ const MissionDetails = () => {
 
   const handleRedirectToMissions = () => navigate('/missions');
 
+  if (!mission) return <Grid container>
+    <Grid item>Loading mission...</Grid>
+  </Grid>
+
   return (
     <Grid container gap={3} justifyContent={"center"}>
       <Grid item xs={12} md={8} textAlign={"center"}>
@@ -45,6 +50,10 @@ const MissionDetails = () => {
       </Grid>
       <Grid item xs={12} md={8}>
         <Typography variant="h4">{robot?.model}</Typography>
+      </Grid>
+      <Grid item xs={12} md={8}>
+        <Typography>Mission start date: {format(mission.startDate, "MM/dd/yyyy")}</Typography>
+        <Typography>Mission end date: {format(mission.endDate, "MM/dd/yyyy")}</Typography>
       </Grid>
       <Grid item xs={12} textAlign={'center'}>
         <Button
