@@ -5,9 +5,11 @@ import { MissionModel } from "../../data-models/Missions/MissionModel";
 
 interface IMissionItem {
   mission: MissionModel;
+  onEdit: (mission: MissionModel) => void;
+  onDelete: (missionId: number) => void;
 }
 
-const MissionItem = ({ mission }: IMissionItem) => {
+const MissionItem = ({ mission, onEdit, onDelete }: IMissionItem) => {
   const navigate = useNavigate();
 
   const handleRedirectToMissionDetails = () => navigate(`/mission-details/${mission.id}`);
@@ -20,8 +22,10 @@ const MissionItem = ({ mission }: IMissionItem) => {
             <Typography variant="h5">{mission.name}</Typography>
           </Stack>
           <Stack flexGrow={1} alignItems={'center'} justifyContent={'flex-end'} direction={'row'} gap={1}>
+            <Button size="small" onClick={() => onEdit(mission)}>Edit</Button>
+            <Button size="small" color="error" onClick={() => onDelete(mission.id)}>Delete</Button>
             <Button
-              variant='text'
+              variant='contained'
               endIcon={<KeyboardArrowRightOutlined />}
               onClick={handleRedirectToMissionDetails}
             >
