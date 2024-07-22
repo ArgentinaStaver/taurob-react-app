@@ -1,22 +1,50 @@
-import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import { Typography, Button, Grid } from "@mui/material";
 import { ArrowBackIosNewRounded } from "@mui/icons-material";
+import { getMissionById } from "../../api/missionsApi";
+import { getRobotById } from "../../api/robotsApi";
+import { MissionModel } from "../../data-models/Missions/MissionModel";
+import { RobotModel } from "../../data-models/Robots/RobotModel";
 
 const MissionDetails = () => {
+  const [mission, setMission] = useState<MissionModel>();
+  const [robot, setRobot] = useState<RobotModel>();
   const navigate = useNavigate();
+  let { id } = useParams(); //missionId
+
+  const fetchMissionById = async (missionId: number) => {
+    const missionData = await getMissionById(missionId);
+    setMission(missionData);
+  }
+
+  const fetchRobotById = async (robotId: number) => {
+    const robotData = await getRobotById(robotId);
+    setRobot(robotData);
+  }
+
+  useEffect(() => {
+    if (id) fetchMissionById(parseInt(id));
+  }, [id]);
+
+  useEffect(() => {
+    if (id && mission) {
+      fetchRobotById(mission.robotId);
+    }
+  }, [mission]);
 
   const handleRedirectToMissions = () => navigate('/missions');
 
   return (
-    <Grid container>
-      <Grid item>
-        <Typography variant="h3">Mission 1</Typography>
+    <Grid container gap={3} justifyContent={"center"}>
+      <Grid item xs={12} md={8} textAlign={"center"}>
+        <Typography variant="h4">{mission?.name}</Typography>
       </Grid>
-      <Grid item>
-        <Typography>Hobbit is a helping hand for elderly people, meaning that hobbit support them in their homes by getting rid of dangers and calling help in cases of emergency. The robot is vested with a Touchscreen, he communicates through language and is able to recognice and identify gestures.</Typography>
+      <Grid item xs={12} md={8}>
+        <Typography>{mission?.description}</Typography>
       </Grid>
-      <Grid item>
-        <Typography variant="h3">Robot HOBBIT</Typography>
+      <Grid item xs={12} md={8}>
+        <Typography variant="h4">{robot?.model}</Typography>
       </Grid>
       <Grid item xs={12} textAlign={'center'}>
         <Button

@@ -11,3 +11,13 @@ export const getRobots = async () => {
     console.log(error);
   }
 };
+
+export const getRobotById = async (robotId: number) => {
+  try {
+    const response = await axios.get(`${baseURL}/robots/${robotId}`);
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
