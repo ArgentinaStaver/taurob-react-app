@@ -3,17 +3,26 @@ import { RobotModel } from "../../data-models/Robots/RobotModel";
 
 interface IRobotItem {
   robot: RobotModel;
+  onEdit: (robot: RobotModel) => void;
+  onDelete: (robotId: number) => void;
 }
 
-const RobotItem = ({ robot }: IRobotItem) => {
+const RobotItem = ({ robot, onEdit, onDelete }: IRobotItem) => {
   return (
-    <Card>
+    <Card sx={{
+      minHeight: 380,
+      display: "flex",
+      flexDirection: "column"
+    }}>
       <CardMedia
         sx={{ height: '140px' }}
         image="https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/smoking-robot-ron-magnes.jpg"
         title={robot.name} />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5">
+          {robot.name}
+        </Typography>
+        <Typography gutterBottom variant="body1">
           {robot.model}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{
@@ -25,9 +34,12 @@ const RobotItem = ({ robot }: IRobotItem) => {
           {robot.description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Edit</Button>
-        <Button size="small">Learn More</Button>
+      <CardActions sx={{
+        marginTop: "auto",
+        justifyContent: "flex-end",
+      }}>
+        <Button size="small" variant="outlined" onClick={() => onEdit(robot)}>Edit</Button>
+        <Button size="small" color="error" variant="outlined" onClick={() => onDelete(robot.id)}>Delete</Button>
       </CardActions>
     </Card>
   );
