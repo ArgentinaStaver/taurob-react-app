@@ -3,6 +3,7 @@ import MainLayout from '../layout/MainLayout';
 import MissionList from '../pages/Missions/MissionList';
 import RobotList from '../pages/Robots/RobotList';
 import MissionDetails from '../pages/Missions/MissionDetails';
+import HomePage from '../pages/Home/HomePage';
 
 const router = createBrowserRouter([
   {
@@ -11,7 +12,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <div>Here will be the homepage</div>,
+        element: <HomePage />,
       },
       {
         path: '/missions',

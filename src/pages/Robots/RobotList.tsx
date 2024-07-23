@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Stack, TextField, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { Bounce, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { RobotModel } from "../../data-models/Robots/RobotModel";
 import { RobotRequestModel } from "../../data-models/Robots/RobotRequestModel";
 import { createRobot, deleteRobotById, getRobots, updateRobot } from "../../api/robotsApi";
@@ -13,17 +13,7 @@ const RobotList = () => {
   const [robotToEdit, setRobotToEdit] = useState<RobotModel | null>(null);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
-  const fetchRobots = () => getRobots().then((response) => setRobots(response.data)).catch(() => toast("Error fetching robots", {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-    transition: Bounce,
-  }));
+  const fetchRobots = () => getRobots().then((response) => setRobots(response.data)).catch(() => toast.error("Error fetching robots"));
 
   useEffect(() => {
     fetchRobots();
@@ -44,29 +34,9 @@ const RobotList = () => {
 
     if (status === 201) {
       fetchRobots();
-      toast("Robot succesfully created", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.success("Robot succesfully created");
     } else {
-      toast("Error by creating the robot", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.error("Error by creating the robot");
     }
   }
 
@@ -77,29 +47,9 @@ const RobotList = () => {
 
     if (status === 200) {
       fetchRobots();
-      toast("Robot succesfully updated", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.success("Robot succesfully updated");
     } else {
-      toast("Error by updating the robot", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast.error("Error by updating the robot");
     }
   }
 
@@ -108,36 +58,16 @@ const RobotList = () => {
       const { status } = await deleteRobotById(id);
       if (status === 200) {
         fetchRobots();
-        toast('Robot successfully deleted!', {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
+        toast.success('Robot successfully deleted!');
       } else if (status === 404) {
-        toast("Robot not found", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
+        toast.error("Robot not found");
       }
     }
   }
 
   return (
     <>
-      <Grid container gap={2} justifyContent={"center"} margin='0 auto' maxWidth={"lg"}>
+      <Grid container gap={2} margin='0 auto' maxWidth={"lg"} sx={{ padding: `24px 16px 0` }}>
         <Grid item xs={12}>
           <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
             <Typography variant="h3">Robots</Typography>

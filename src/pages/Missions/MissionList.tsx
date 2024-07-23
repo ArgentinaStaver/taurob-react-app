@@ -87,8 +87,8 @@ const MissionList = () => {
 
   return (
     <>
-      <Grid container gap={3} justifyContent={"center"} margin='0 auto'>
-        <Grid item xs={12} md={8}>
+      <Grid container gap={3} justifyContent={"center"} margin='0 auto' sx={{ padding: `24px 16px 0` }}>
+        <Grid item xs={12} md={6}>
           <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
             <Typography variant="h4">Robots missions</Typography>
             <div>
@@ -104,8 +104,8 @@ const MissionList = () => {
           </Stack>
         </Grid>
         {
-          missions.map((mission) =>
-            <Grid item xs={12} md={8} key={mission.id}>
+          missions.map((mission, index) =>
+            <Grid item xs={12} md={6} key={index}>
               <MissionItem mission={mission} onEdit={handleOpenDialog} onDelete={handleDeleteMission} />
             </Grid>
           )

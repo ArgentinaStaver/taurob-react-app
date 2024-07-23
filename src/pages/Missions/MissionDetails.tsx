@@ -38,24 +38,24 @@ const MissionDetails = () => {
 
   if (!mission) return <Grid container>
     <Grid item>Loading mission...</Grid>
-  </Grid>
+  </Grid>;
 
   return (
-    <Grid container gap={3} justifyContent={"center"}>
-      <Grid item xs={12} md={8} textAlign={"center"}>
+    <Grid container gap={3} justifyContent={"center"} sx={{ padding: `24px 16px 0` }}>
+      <Grid item xs={12} md={6} textAlign={"center"}>
         <Typography variant="h4">{mission?.name}</Typography>
       </Grid>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12} md={6}>
         <Typography>{mission?.description}</Typography>
       </Grid>
-      <Grid item xs={12} md={8}>
-        <Typography variant="h4">{robot?.model}</Typography>
+      <Grid item xs={12} md={6}>
+        <Typography variant="h5">{robot?.model}</Typography>
       </Grid>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12} md={6}>
         <Typography>Mission start date: {format(mission.startDate, "MM/dd/yyyy")}</Typography>
         <Typography>Mission end date: {format(mission.endDate, "MM/dd/yyyy")}</Typography>
       </Grid>
-      <Grid item xs={12} textAlign={'center'}>
+      <Grid item xs={12} md={6} textAlign={"end"}>
         <Button
           variant="text"
           startIcon={<ArrowBackIosNewRounded />}
@@ -63,7 +63,6 @@ const MissionDetails = () => {
           sx={{
             marginTop: '20px',
             '&.MuiButton-root:hover': {
-              textDecoration: 'underline',
               backgroundColor: 'unset',
             }
           }}
